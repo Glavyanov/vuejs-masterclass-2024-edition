@@ -15,15 +15,18 @@
     "supabase:login": "supabase login",
     "supabase:link": "supabase link --project-ref fjjxzcgbighiodxsibpd",
     "db:migrate:new": "supabase migration new projects-schema",
-    "db:reset": "supabase db reset --linked"
+    "db:reset": "supabase db reset --linked",
+    "db:seed": "node database/seed.js"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.43.4", 
+    "@dotenvx/dotenvx": "^0.45.0",
+    "@supabase/supabase-js": "^2.43.4",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.5",
