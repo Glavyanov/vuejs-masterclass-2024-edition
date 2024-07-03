@@ -14,9 +14,10 @@
     "supabase:init": "supabase init",
     "supabase:login": "supabase login",
     "supabase:link": "supabase link --project-ref fjjxzcgbighiodxsibpd",
-    "db:migrate:new": "supabase migration new projects-schema",
+    "db:migrate:new": "supabase migration new",
     "db:reset": "supabase db reset --linked",
-    "db:seed": "node database/seed.js"
+    "db:seed": "node database/seed.js",
+    "supabase:types": "npx supabase gen types typescript --project-id fjjxzcgbighiodxsibpd --schema public > database/types.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.45.0",

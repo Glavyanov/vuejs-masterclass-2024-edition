@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1>Projects page</h1>
+        <h1>Tasks page</h1>
         <RouterLink :to="{ name: '/' }"> Go to Home</RouterLink>
     </div>
-    <div v-if="projects && projects.length">
-        <p v-for="project in projects" :key="project.id">
-            {{ project.name }}
+    <div v-if="tasks && tasks.length">
+        <p v-for="task in tasks" :key="task.id">
+            {{ task.name }}
         </p>
     </div>
 </template>
@@ -15,10 +15,11 @@ import { supabase } from '@/lib/supabaseClient';
 import { ref } from 'vue';
 import { type Tables } from 'database/types';
 
-const projects = ref<Tables<'projects'>[] | null>();
+const tasks = ref<Tables<'tasks'>[] | null>();
+
 ( async () => {
-    const { data, error} = await supabase.from('projects').select();
-    if(data) projects.value = [...data]
+    const { data, error} = await supabase.from('tasks').select();
+    if(data) tasks.value = [...data]
     if(error) console.log(error)
 })()
 </script>
