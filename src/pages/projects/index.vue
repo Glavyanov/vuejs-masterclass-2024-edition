@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>Projects page</h1>
-        <RouterLink :to="{ name: '/' }"> Go to Home</RouterLink>
     </div>
     <div v-if="projects && projects.length">
         <p v-for="project in projects" :key="project.id">

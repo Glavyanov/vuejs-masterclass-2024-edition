@@ -10,8 +10,5 @@
         <div>
             <RouterLink :to="{ name: '/projects/[id]', params: { id: 2 } }"> Go to Project 2</RouterLink>
         </div>
-        <div>
-            <RouterLink :to="{ name: '/tasks/' }"> Go to Tasks page</RouterLink>
-        </div>
     </div>
 </template>
