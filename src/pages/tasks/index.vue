@@ -3,7 +3,7 @@
     <h1>Tasks page</h1>
   </div>
   <div v-if="tasks && tasks.length">
-    <DataTable :columns="columns" :data="payments" />
+    <DataTable :columns="columns" :data="tasks" />
   </div>
 </template>
 
@@ -23,42 +23,41 @@ const tasks = ref<Tables<'tasks'>[] | null>()
   if (error) console.log(error)
 })()
 
-interface Payment {
-  id: string
-  amount: number
-  status: 'pending' | 'processing' | 'success' | 'failed'
-  email: string
-}
-
-const payments: Payment[] = [
+const columns: ColumnDef<Tables<'tasks'>>[] = [
   {
-    id: '728ed52f',
-    amount: 100,
-    status: 'pending',
-    email: 'm@example.com'
+    accessorKey: 'name',
+    header: () => h('div', { class: 'text-left' }, 'Name'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('name')),
   },
   {
-    id: '489e1d42',
-    amount: 125,
-    status: 'processing',
-    email: 'example@gmail.com'
-  }
-  // ...
-]
-
-const columns: ColumnDef<Payment>[] = [
+    accessorKey: 'created_at',
+    header: () => h('div', { class: 'text-left' }, 'Created at'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('created_at')),
+  },
   {
-    accessorKey: 'amount',
-    header: () => h('div', { class: 'text-right' }, 'Amount'),
-    cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue('amount'))
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      }).format(amount)
-
-      return h('div', { class: 'text-right font-medium' }, formatted)
-    }
-  }
+    accessorKey: 'due_date',
+    header: () => h('div', { class: 'text-left' }, 'Due date'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('due_date')),
+  },
+  {
+    accessorKey: 'description',
+    header: () => h('div', { class: 'text-left' }, 'Description'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('description')),
+  },
+  {
+    accessorKey: 'status',
+    header: () => h('div', { class: 'text-left' }, 'Status'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('status')),
+  },
+  {
+    accessorKey: 'project_id',
+    header: () => h('div', { class: 'text-left' }, 'Project id'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('project_id')),
+  },
+  {
+    accessorKey: 'collaborators',
+    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, JSON.stringify(row.getValue('collaborators'))),
+  },
 ]
 </script>
