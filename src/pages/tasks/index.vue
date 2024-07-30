@@ -8,16 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import type { ColumnDef } from '@tanstack/vue-table';
 import { type Tables } from 'database/types'
 import DataTable from '@/components/ui/data-table/DataTable.vue';
 
-const tasks = ref<Tables<'tasks'>[] | null>()
+const tasks = ref<Tables<'tasks'>[] | null>();
 
-;(async () => {
+(async () => {
   const { data, error } = await supabase.from('tasks').select()
   if (data) tasks.value = [...data]
   if (error) console.log(error)
