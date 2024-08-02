@@ -7,8 +7,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, h } from 'vue'
+<script  lang="ts" setup>
 import { supabase } from '@/lib/supabaseClient'
 import type { ColumnDef } from '@tanstack/vue-table';
 import { type Tables } from 'database/types'

@@ -8,9 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import { supabase } from '@/lib/supabaseClient'
-import { ref } from 'vue'
 import { type Tables } from 'database/types';
 
 const project = ref<Tables<'projects'> | null>(null)
