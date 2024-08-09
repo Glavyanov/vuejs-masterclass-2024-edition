@@ -13,13 +13,15 @@ import type { ColumnDef } from '@tanstack/vue-table';
 import { type Tables } from 'database/types'
 import { RouterLink } from 'vue-router';
 
-const tasks = ref<Tables<'tasks'>[] | null>();
+const tasks = ref<Tables<'tasks'>[] | null>(null);
 
-(async () => {
+const loadTasks = async () => {
   const { data, error } = await supabase.from('tasks').select()
   if (data) tasks.value = [...data]
   if (error) console.log(error)
-})()
+};
+
+await loadTasks();
 
 const columns: ColumnDef<Tables<'tasks'>>[] = [
   {
