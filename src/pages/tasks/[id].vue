@@ -15,9 +15,10 @@
   
   const task = ref<Tables<'tasks'> | null>(null)
   const route = useRoute();
+  const id = ("id" in route.params) ? route.params.id : "";
   
   (async () => {
-    const { data, error } = await supabase.from('tasks').select().match({ id: route.params?.id})
+    const { data, error } = await supabase.from('tasks').select().match({ id })
     if (data) task.value = { ...data[0] }
     if (error) console.log(error)
   })()

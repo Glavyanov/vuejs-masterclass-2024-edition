@@ -13,9 +13,10 @@ import { type Tables } from 'database/types';
 
 const project = ref<Tables<'projects'> | null>(null)
 const route = useRoute();
+const slug = ("slug" in route.params) ? route.params.slug : "";
 
 (async () => {
-  const { data, error } = await supabase.from('projects').select().match({ slug: route.params?.slug })
+  const { data, error } = await supabase.from('projects').select().match({ slug })
   if (data) project.value = { ...data[0] }
   if (error) console.log(error)
 })()

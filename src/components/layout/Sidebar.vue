@@ -25,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import SidebarLinks from '@/components/layout/SidebarLinks.vue'
-import { Button } from '@/components/ui/button';
 
 const links = [
   {
