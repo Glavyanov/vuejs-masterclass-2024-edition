@@ -13,6 +13,7 @@ import type { ColumnDef } from '@tanstack/vue-table';
 import { type Tables } from 'database/types'
 import { RouterLink } from 'vue-router';
 
+usePageStore().pageData.title = "Tasks"
 const tasks = ref<Tables<'tasks'>[] | null>(null);
 
 const loadTasks = async () => {

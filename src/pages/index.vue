@@ -1,6 +1,3 @@
-<script  lang="ts" setup>
-</script>
-
 <template>
     <div>
         <h1>Home page</h1>
@@ -12,3 +9,7 @@
         </div>
     </div>
 </template>
+
+<script  lang="ts" setup>
+usePageStore().pageData.title = "Dashboard"
+</script>
