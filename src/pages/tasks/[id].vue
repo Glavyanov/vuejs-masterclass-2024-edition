@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
 import { type Tables } from 'database/types'
+usePageStore().pageData.title = 'Task'
 
 const task = ref<Tables<'tasks'> | null>(null)
 const route = useRoute()
