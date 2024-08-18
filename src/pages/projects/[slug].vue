@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Project:&nbsp;&nbsp;&nbsp;{{ project?.name }}</h1>
-    <h2>status:&nbsp;&nbsp;&nbsp;{{ project?.status }}</h2>
-    <h3>collaborators:&nbsp;&nbsp;&nbsp;{{ JSON.stringify(project?.collaborators) }}</h3>
+    <h1>Project:   {{ project?.name }}</h1>
+    <h2>status:   {{ project?.status }}</h2>
+    <h3>collaborators:   {{ JSON.stringify(project?.collaborators) }}</h3>
     <RouterLink :to="{ name: '/' }"> Go to Home</RouterLink>
   </div>
 </template>

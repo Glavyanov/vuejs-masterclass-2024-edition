@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1>Project:&nbsp;&nbsp;&nbsp;{{ task?.name }}</h1>
-    <h2>Status:&nbsp;&nbsp;&nbsp;{{ task?.status }}</h2>
-    <h3>Description:&nbsp;&nbsp;&nbsp;{{ task?.description }}</h3>
-    <h4>Collaborators:&nbsp;&nbsp;&nbsp;{{ JSON.stringify(task?.collaborators) }}</h4>
-    <h4>Created at:&nbsp;&nbsp;&nbsp;{{ task?.created_at }}</h4>
+    <h1>Project:   {{ task?.name }}</h1>
+    <h2>Status:   {{ task?.status }}</h2>
+    <h3>Description:   {{ task?.description }}</h3>
+    <h4>Collaborators:   {{ JSON.stringify(task?.collaborators) }}</h4>
+    <h4>Created at:   {{ task?.created_at }}</h4>
     <RouterLink :to="{ name: '/' }"> Go to Home</RouterLink>
   </div>
 </template>
