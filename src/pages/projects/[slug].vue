@@ -8,17 +8,18 @@
 </template>
 
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
-import { type Tables } from 'database/types';
+import { projectQuery } from '@/utils/supaQueries'
+import type { Project } from '@/utils/supaQueries'
+
 usePageStore().pageData.title = "Project"
 
-const project = ref<Tables<'projects'> | null>(null)
+const project = ref<Project | null>(null)
 const route = useRoute();
 const slug = ("slug" in route.params) ? route.params.slug : "";
 
 const loadProject = async () => {
-  const { data, error } = await supabase.from('projects').select().match({ slug })
-  if (data) project.value = { ...data[0] }
+  const { data, error } = await projectQuery(slug);
+  if (data) project.value = { ...data }
   if (error) console.log(error)
 };
 
