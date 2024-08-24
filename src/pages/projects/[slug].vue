@@ -90,6 +90,7 @@ const route = useRoute('/projects/[slug]');
 // const route = useRoute(); => alternative way
 // const slug = ("slug" in route.params) ? route.params.slug : ""; => alternative way
 const slug = route.params?.slug;
+const pageStore = usePageStore();
 
 const loadProject = async () => {
   const { data, error } = await projectQuery(slug);
@@ -101,7 +102,7 @@ await loadProject();
 
 watch(() => project.value?.name,
   (val) => {
-    usePageStore().pageData.title = `Project ${val ?? ''}`;
+    pageStore.pageData.title = `Project ${val ?? ''}`;
   },
   { immediate: true }
 )
