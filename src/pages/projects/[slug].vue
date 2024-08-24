@@ -88,9 +88,7 @@
 import { projectQuery } from '@/utils/supaQueries'
 import type { Project } from '@/utils/supaQueries'
 
-usePageStore().pageData.title = "Project"
-
-const project = ref<Project | null>(null)
+const project = ref<Project | null>(null);
 const route = useRoute('/projects/[slug]');
 // const route = useRoute(); => alternative way
 // const slug = ("slug" in route.params) ? route.params.slug : ""; => alternative way
@@ -103,6 +101,13 @@ const loadProject = async () => {
 };
 
 await loadProject();
+
+watch(() => project.value?.name,
+  (val) => {
+    usePageStore().pageData.title = `Project ${val ?? ''}`;
+  },
+  { immediate: true }
+)
 </script>
 
 <style>
