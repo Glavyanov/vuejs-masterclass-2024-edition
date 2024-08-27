@@ -1,15 +1,7 @@
 <template>
-    <div class="heading">
-        <h1 class="heading-title">404 Not Found</h1>
-    </div>
+    <AppErrorPage />
 </template>
 
-<style>
-.heading {
- text-align: center;
-}
-
-.heading-title {
-    color: rebeccapurple;
-}
-</style>
+<script setup lang="ts">
+import AppErrorPage from '@/components/AppError/AppErrorPage.vue'
+</script>
