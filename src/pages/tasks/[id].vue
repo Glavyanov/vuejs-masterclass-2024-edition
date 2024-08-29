@@ -92,9 +92,11 @@ const id = route.params?.id;
 const pageStore = usePageStore();
 
 const loadTask = async () => {
-  const { data, error } = await taskQuery(id);
+  const { data, error, status } = await taskQuery(id);
   if (data) task.value = { ...data }
-  if (error) console.log(error)
+  if (error){
+    useErrorStore().setError({error, customCode: status});
+  }
 }
 
 await loadTask();

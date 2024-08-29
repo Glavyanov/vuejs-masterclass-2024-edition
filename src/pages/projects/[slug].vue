@@ -93,9 +93,11 @@ const slug = route.params?.slug;
 const pageStore = usePageStore();
 
 const loadProject = async () => {
-  const { data, error } = await projectQuery(slug);
+  const { data, error, status } = await projectQuery(slug);
   if (data) project.value = { ...data }
-  if (error) console.log(error)
+  if (error){
+    useErrorStore().setError({error, customCode: status});
+  }
 };
 
 await loadProject();
