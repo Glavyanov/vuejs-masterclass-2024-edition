@@ -90,10 +90,11 @@ const route = useRoute('/projects/[slug]');
 // const route = useRoute(); => alternative way
 // const slug = ("slug" in route.params) ? route.params.slug : ""; => alternative way
 const slug = route.params?.slug;
+const isById = !!route.query?.isById;
 const pageStore = usePageStore();
 
 const loadProject = async () => {
-  const { data, error, status } = await projectQuery(slug);
+  const { data, error, status } = await projectQuery(slug, isById);
   if (data) project.value = { ...data }
   if (error){
     useErrorStore().setError({error, customCode: status});
