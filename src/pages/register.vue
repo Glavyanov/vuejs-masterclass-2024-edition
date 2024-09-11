@@ -12,7 +12,7 @@
           <Button variant="outline" class="w-full"> Register with Google </Button>
           <Separator label="Or" />
         </div>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="signUp">
           <div class="grid gap-2">
             <Label id="username" class="text-left">Username</Label>
             <Input v-model="formData.username" id="username" type="text" placeholder="johndoe19" required />
@@ -61,6 +61,10 @@
 </template>
 
 <script setup lang="ts">
+import { supabase } from '@/lib/supabaseClient';
+
+const router = useRouter();
+
 const formData = ref({
   username: '',
   firstName: '',
@@ -69,4 +73,33 @@ const formData = ref({
   password: '',
   confirmPassword: ''
 })
+
+const signUp = async () => {
+  const { data, error } = await supabase.auth.signUp({
+  email: formData.value.email,
+  password: formData.value.password,
+})
+  if (error) {
+    console.error('Error:', error.message)
+    return
+  }
+  console.log('Success:', data)
+
+  if(data.user){
+    const { error } = await supabase
+      .from('profiles')
+      .insert({
+        id: data.user.id,
+        username: formData.value.username,
+        full_name: `${formData.value.firstName} ${formData.value.lastName}`
+      })
+
+    if (error) {
+      console.error('Insert Error:', error)
+      return
+    }
+
+    router.push('/');
+  }
+}
 </script>
