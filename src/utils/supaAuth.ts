@@ -27,8 +27,8 @@ export const register = async (formData: RegisterForm) => {
     }
   }
 
-  authStore.setAuth(data.session);
-  
+  await authStore.setAuth(data.session);
+
   return !error
 }
 
@@ -42,7 +42,7 @@ export const login = async (formData: LoginForm) => {
     errorStore.setError({error, customCode: 400});
   }
 
-  authStore.setAuth(data.session);
+  await authStore.setAuth(data.session);
 
   return !error;
 }
