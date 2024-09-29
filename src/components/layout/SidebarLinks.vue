@@ -26,6 +26,11 @@ interface LinkProp {
 defineProps<{
   links: LinkProp[]
 }>()
+// const { links } = defineProps<{
+//   links: LinkProp[]
+// }>()
+// //links with to property
+// const filteredLinks = computed(() => links.filter((link): link is LinkProp & { to: string} => !!link.to))
 </script>
 
 <style scoped>
