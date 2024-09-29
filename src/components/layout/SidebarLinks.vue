@@ -1,22 +1,25 @@
 <template>
-  <div>
+  <template v-for="link in links" :key="link.title">
     <RouterLink
-      exactActiveClass="text-primary bg-muted"
-      v-for="link in links"
-      :key="link.title"
+      v-if="link.to"
       :to="link.to"
-      class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
+      exactActiveClass="text-primary bg-muted"
+      class="nav-link"
     >
       <iconify-icon :icon="link.icon"></iconify-icon>
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </RouterLink>
-  </div>
+    <div v-else class="nav-link cursor-pointer">
+      <iconify-icon :icon="link.icon"></iconify-icon>
+      <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
+    </div>
+  </template>
 </template>
 
 <script lang="ts" setup>
 interface LinkProp {
   title: string
-  to: string
+  to?: string
   icon: string
 }
 
@@ -24,3 +27,9 @@ defineProps<{
   links: LinkProp[]
 }>()
 </script>
+
+<style scoped>
+.nav-link {
+  @apply flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground;
+}
+</style>
