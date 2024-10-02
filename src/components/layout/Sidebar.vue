@@ -18,7 +18,7 @@
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" />
+        <SidebarLinks :links="accountLinks" @clicked="onClick"/>
       </div>
     </nav>
   </aside>
@@ -60,4 +60,12 @@ const accountLinks = [
     icon: 'lucide:log-out'
   }
 ]
+
+const onClick = async (command: string) =>{
+  if(command === 'Sign out'){
+    // necessary to use dynamic import or we get error => no active Pinia =>  https://vueschool.io/lessons/overcome-challenges-of-using-pinia-stores-in-external-files
+    const { logout } = await import('@/utils/supaAuth');
+    await logout();
+  }
+}
 </script>

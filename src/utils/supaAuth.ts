@@ -46,3 +46,16 @@ export const login = async (formData: LoginForm) => {
 
   return !error;
 }
+
+export const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error){
+    errorStore.setError({error, customCode: 400});
+    return false;
+  }
+
+  await authStore.setAuth(null);
+
+  return true;
+}
