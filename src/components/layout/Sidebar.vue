@@ -61,11 +61,15 @@ const accountLinks = [
   }
 ]
 
+const router = useRouter();
+
 const onClick = async (command: string) =>{
   if(command === 'Sign out'){
     // necessary to use dynamic import or we get error => no active Pinia =>  https://vueschool.io/lessons/overcome-challenges-of-using-pinia-stores-in-external-files
     const { logout } = await import('@/utils/supaAuth');
     await logout();
+
+    router.push("/login");
   }
 }
 </script>
