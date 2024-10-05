@@ -21,7 +21,9 @@ onErrorCaptured((error) => {
   errorStore.setError({ error });
 });
 
-onMounted(async () => {});
+onMounted(() => {
+  useAuthStore().authTrackChanges();
+});
 
 // mocking component
 // const MockComponent = defineComponent(async () => {

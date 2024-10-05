@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabaseClient'
 import type { LoginForm, RegisterForm } from '@/types/AuthForm'
 
 const errorStore = useErrorStore();
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 
 export const register = async (formData: RegisterForm) => {
   const { data, error } = await supabase.auth.signUp({
@@ -27,7 +27,7 @@ export const register = async (formData: RegisterForm) => {
     }
   }
 
-  await authStore.setAuth(data.session);
+  // await authStore.setAuth(data.session);
 
   return !error
 }
@@ -42,7 +42,7 @@ export const login = async (formData: LoginForm) => {
     errorStore.setError({error, customCode: 400});
   }
 
-  await authStore.setAuth(data.session);
+  // await authStore.setAuth(data.session);
 
   return !error;
 }
@@ -55,7 +55,7 @@ export const logout = async () => {
     return false;
   }
 
-  await authStore.setAuth(null);
+  // await authStore.setAuth(null);
 
   return true;
 }
