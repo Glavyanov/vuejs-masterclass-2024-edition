@@ -21,7 +21,7 @@
               placeholder="johndoe19@example.com"
               required
               :class="{
-                'border-red-500': _error
+                'border-red-500': serverError
               }"
             />
           </div>
@@ -37,12 +37,12 @@
               autocomplete
               required
               :class="{
-                'border-red-500': _error
+                'border-red-500': serverError
               }"
             />
           </div>
-          <ul class="text-sm text-left text-red-500" v-if="_error">
-            <li class="list-disc"> {{ _error }}</li>
+          <ul class="text-sm text-left text-red-500" v-if="serverError">
+            <li class="list-disc"> {{ serverError }}</li>
           </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
@@ -62,14 +62,14 @@ const { email, password } = toRefs({
   password: ''
 })
 
+const { serverError, handleServerError } = useFormErrors();
 const router = useRouter()
-const _error = ref('')
+
 
 const signin = async () => {
   const { error } = await login({ email: email.value, password: password.value })
 
   if (!error) return router.push('/')
-
-  _error.value = error.message === 'Invalid login credentials' ? 'Incorrect password or email' : error.message;
+  handleServerError(error);
 }
 </script>
