@@ -20,6 +20,9 @@
               name="email"
               placeholder="johndoe19@example.com"
               required
+              :class="{
+                'border-red-500': _error
+              }"
             />
           </div>
           <div class="grid gap-2">
@@ -27,8 +30,20 @@
               <Label id="password">Password</Label>
               <a href="#" class="inline-block ml-auto text-xs underline"> Forgot your password? </a>
             </div>
-            <Input v-model="password" id="password" type="password" autocomplete required />
+            <Input
+              v-model="password"
+              id="password"
+              type="password"
+              autocomplete
+              required
+              :class="{
+                'border-red-500': _error
+              }"
+            />
           </div>
+          <ul class="text-sm text-left text-red-500" v-if="_error">
+            <li class="list-disc"> {{ _error }}</li>
+          </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
         <div class="mt-4 text-sm text-center">
@@ -48,10 +63,13 @@ const { email, password } = toRefs({
 })
 
 const router = useRouter()
+const _error = ref('')
 
 const signin = async () => {
-  const success = await login({ email: email.value, password: password.value })
+  const { error } = await login({ email: email.value, password: password.value })
 
-  if (success) router.push('/')
+  if (!error) return router.push('/')
+
+  _error.value = error.message === 'Invalid login credentials' ? 'Incorrect password or email' : error.message;
 }
 </script>

@@ -33,18 +33,18 @@ export const register = async (formData: RegisterForm) => {
 }
 
 export const login = async (formData: LoginForm) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: formData.email,
     password: formData.password
   })
 
-  if (error){
-    errorStore.setError({error, customCode: 400});
-  }
+  // if (error){
+  //   errorStore.setError({error, customCode: 400});
+  // }
 
   // await authStore.setAuth(data.session);
 
-  return !error;
+  return { error };
 }
 
 export const logout = async () => {
