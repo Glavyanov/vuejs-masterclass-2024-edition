@@ -23,10 +23,9 @@
               :class="{
                 'border-red-500': serverError
               }"
-              @input="handleLoginForm(formData)"
             />
-            <ul class="text-sm text-left text-red-500" v-if="realTimeErrors?.email.length" >
-              <li v-for="error in realTimeErrors.email" :key="error" class="list-disc"> 
+            <ul class="text-sm text-left text-red-500" v-if="realTimeErrors?.email.length">
+              <li v-for="error in realTimeErrors.email" :key="error">
                 {{ error }}
               </li>
             </ul>
@@ -45,16 +44,15 @@
               :class="{
                 'border-red-500': serverError
               }"
-              @input="handleLoginForm(formData)"
             />
-            <ul class="text-sm text-left text-red-500" v-if="realTimeErrors?.password.length" >
-              <li v-for="error in realTimeErrors.password" :key="error" class="list-disc"> 
+            <ul class="text-sm text-left text-red-500" v-if="realTimeErrors?.password.length">
+              <li v-for="error in realTimeErrors.password" :key="error">
                 {{ error }}
               </li>
             </ul>
           </div>
           <ul class="text-sm text-left text-red-500" v-if="serverError">
-            <li class="list-disc"> {{ serverError }}</li>
+            <li>{{ serverError }}</li>
           </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
@@ -68,20 +66,31 @@
 </template>
 <script setup lang="ts">
 import { login } from '@/utils/supaAuth'
+import { watchDebounced } from '@vueuse/core'
 
 const formData = ref({
   email: '',
   password: ''
 })
 
-const { serverError, handleServerError, realTimeErrors, handleLoginForm } = useFormErrors();
+const { serverError, handleServerError, realTimeErrors, handleLoginForm } = useFormErrors()
 const router = useRouter()
 
-
 const signin = async () => {
-  const { error } = await login(formData.value);
+  const { error } = await login(formData.value)
 
   if (!error) return router.push('/')
-  handleServerError(error);
+  handleServerError(error)
 }
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginForm(formData.value)
+  },
+  {
+    debounce: 1200,
+    deep: true
+  }
+)
 </script>
