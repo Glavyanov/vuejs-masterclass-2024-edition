@@ -17,7 +17,7 @@ export const useFormErrors = () => {
     realTimeErrors.value = {
       email: [],
       password: []
-    }
+    };
 
     const { validateEmail, validatePassword } = await import('@/utils/formValidations')
 
