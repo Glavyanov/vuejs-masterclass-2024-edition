@@ -9,8 +9,8 @@ export const tasksWithProjectsQuery = supabase.from('tasks').select(`
 
 export type TasksWithProjects = QueryData<typeof tasksWithProjectsQuery>
 
-export const projectsQueries = supabase.from('projects').select();
-export type Projects = QueryData<typeof projectsQueries>
+export const projectsQuery = supabase.from('projects').select();
+export type Projects = QueryData<typeof projectsQuery>
 
 export const projectQuery = (slug: string, isById: boolean = false ) => !isById
   ? supabase

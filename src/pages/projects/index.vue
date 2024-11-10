@@ -8,20 +8,16 @@
 </template>
 
 <script lang="ts" setup>
-import { projectsQueries } from '@/utils/supaQueries';
 import { columns } from '@/utils/tableColumns/projectsColumns';
-import type { Projects } from '@/utils/supaQueries';
+import { useProjectsStore } from '@/stores/loaders/projects';
 
 usePageStore().pageData.title = "Projects"
-const projects = ref<Projects | null>(null);
 
-const loadProjects = async () => {
-    const { data, error, status} = await projectsQueries;
-    if(data) projects.value = [...data]
-    if (error){
-    useErrorStore().setError({error, customCode: status});
-  }
-};
+const projectsLoader = useProjectsStore();
 
-await loadProjects();
+const { getProjects } = projectsLoader;
+const { projects } = storeToRefs(projectsLoader);
+
+
+await getProjects();
 </script>
