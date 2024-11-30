@@ -3,7 +3,7 @@
     <h1>Projects page</h1>
   </div>
   <div v-if="projects && projects.length">
-    <DataTable :columns="columns" :data="projects" />
+    <DataTable :columns="columnsWithCollabs" :data="projects" />
   </div>
 </template>
 
@@ -23,6 +23,5 @@ await getProjects()
 const { getGroupedCollabs, groupedCollabs } = useCollabs()
 
 await getGroupedCollabs(projects.value)
-
-console.log('TEST ::', groupedCollabs.value)
+const columnsWithCollabs = columns(groupedCollabs)
 </script>
