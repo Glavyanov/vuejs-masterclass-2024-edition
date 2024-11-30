@@ -36,8 +36,10 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
         'div',
         { class: 'text-left font-medium' },
         collabs.value[row.original?.id]?.map((collab) =>
-          h(Avatar, () =>
-            h(AvatarImage, { src: collab.avatar_url || '', alt: collab.username || '' })
+          h(RouterLink, { to: `/users/${collab.username}` }, () =>
+            h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
+              h(AvatarImage, { src: collab.avatar_url || '', alt: collab.username || '' })
+            )
           )
         )
       )
