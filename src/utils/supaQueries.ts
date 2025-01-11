@@ -12,12 +12,11 @@ export type TasksWithProjects = QueryData<typeof tasksWithProjectsQuery>
 export const projectsQuery = supabase.from('projects').select()
 export type Projects = QueryData<typeof projectsQuery>
 
-export const projectQuery = (slug: string, isById: boolean = false) =>
-  !isById
-    ? supabase
-        .from('projects')
-        .select(
-          `
+export const projectQuery = (slug: string) =>
+  supabase
+    .from('projects')
+    .select(
+      `
         *,
         tasks (
           id,
@@ -26,24 +25,9 @@ export const projectQuery = (slug: string, isById: boolean = false) =>
           due_date
         )
       `
-        )
-        .eq('slug', slug)
-        .single()
-    : supabase
-        .from('projects')
-        .select(
-          `
-      *,
-      tasks (
-        id,
-        name,
-        status,
-        due_date
-      )
-    `
-        )
-        .eq('id', slug)
-        .single()
+    )
+    .eq('slug', slug)
+    .single()
 
 export type Project = QueryData<ReturnType<typeof projectQuery>>
 

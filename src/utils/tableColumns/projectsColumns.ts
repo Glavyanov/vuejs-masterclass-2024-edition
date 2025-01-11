@@ -5,6 +5,7 @@ import Avatar from '@/components/ui/avatar/Avatar.vue'
 import AvatarImage from '@/components/ui/avatar/AvatarImage.vue'
 import type { GroupedCollabs } from '@/types/GroupedCollabs'
 import type { Ref } from 'vue'
+import { AvatarFallback } from 'radix-vue'
 
 export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
@@ -35,13 +36,17 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
       return h(
         'div',
         { class: 'text-left font-medium' },
-        collabs.value[row.original?.id]?.map((collab) =>
-          h(RouterLink, { to: `/users/${collab.username}` }, () =>
-            h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
-              h(AvatarImage, { src: collab.avatar_url || '', alt: collab.username || '' })
+        collabs.value[row.original?.id]
+          ? collabs.value[row.original?.id]?.map((collab) =>
+              h(RouterLink, { to: `/users/${collab.username}` }, () =>
+                h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
+                  h(AvatarImage, { src: collab.avatar_url || '', alt: collab.username || '' })
+                )
+              )
             )
-          )
-        )
+          : row.original?.collaborators.map(() => {
+              return h(Avatar, { class: 'animate-pulse' }, () => h(AvatarFallback))
+            })
       )
     }
   },

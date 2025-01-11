@@ -82,30 +82,20 @@
 </template>
 
 <script setup lang="ts">
-import { projectQuery } from '@/utils/supaQueries'
-import type { Project } from '@/utils/supaQueries'
-
-const project = ref<Project | null>(null);
-const route = useRoute('/projects/[slug]');
+const { slug } = useRoute('/projects/[slug]').params
 // const route = useRoute(); => alternative way
 // const slug = ("slug" in route.params) ? route.params.slug : ""; => alternative way
-const slug = route.params?.slug;
-const isById = !!route.query?.isById;
-const pageStore = usePageStore();
+const pageStore = usePageStore()
+const projectLoader = useProjectsStore()
+const { project } = storeToRefs(projectLoader)
+const { getProject } = projectLoader
 
-const loadProject = async () => {
-  const { data, error, status } = await projectQuery(slug, isById);
-  if (data) project.value = { ...data }
-  if (error){
-    useErrorStore().setError({error, customCode: status});
-  }
-};
+await getProject(slug)
 
-await loadProject();
-
-watch(() => project.value?.name,
+watch(
+  () => project.value?.name,
   (val) => {
-    pageStore.pageData.title = `Project ${val ?? ''}`;
+    pageStore.pageData.title = `Project ${val ?? ''}`
   },
   { immediate: true }
 )
@@ -124,5 +114,3 @@ h2 {
   @apply overflow-hidden overflow-y-auto rounded-md bg-slate-900 h-80;
 }
 </style>
-
-
