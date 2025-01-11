@@ -90,15 +90,15 @@ const projectLoader = useProjectsStore()
 const { project } = storeToRefs(projectLoader)
 const { getProject } = projectLoader
 
-await getProject(slug)
-
 watch(
   () => project.value?.name,
   (val) => {
-    pageStore.pageData.title = `Project ${val ?? ''}`
+    pageStore.pageData.title = `Project ${val || ''}`
   },
   { immediate: true }
 )
+
+await getProject(slug)
 </script>
 
 <style>
