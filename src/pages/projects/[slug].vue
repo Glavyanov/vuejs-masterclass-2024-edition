@@ -2,7 +2,9 @@
   <Table v-if="project">
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> {{ project.name }} </TableCell>
+      <TableCell>
+        <AppInPlaceEditText v-model="project.name" @commit="updateProject" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
@@ -88,7 +90,7 @@ const { slug } = useRoute('/projects/[slug]').params
 const pageStore = usePageStore()
 const projectLoader = useProjectsStore()
 const { project } = storeToRefs(projectLoader)
-const { getProject } = projectLoader
+const { getProject, updateProject } = projectLoader
 
 watch(
   () => project.value?.name,
