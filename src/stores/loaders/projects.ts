@@ -66,7 +66,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
   const updateProject = async () => {
     if (!project.value) return
     const { tasks, id, ...projectData } = project.value
-    const { error, status } = await updateProjectQuery(id, project.value)
+    const { error, status } = await updateProjectQuery(id, projectData)
     if (error) {
       useErrorStore().setError({ error, customCode: status })
     }
