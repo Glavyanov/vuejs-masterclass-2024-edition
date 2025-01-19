@@ -8,7 +8,9 @@
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
-      <TableCell> {{ project.description }} </TableCell>
+      <TableCell>
+        <AppInPlaceEditTextarea v-model="project" @commit="updateProject" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
