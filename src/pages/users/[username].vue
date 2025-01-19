@@ -6,7 +6,7 @@
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
 
-      <p class="mt-2 text-gray-500">{{ profile?.username}}</p>
+      <p class="mt-2 text-gray-500">{{ profile?.username }}</p>
       <h1 class="mt-5 text-4xl font-bold">{{ profile?.full_name }}</h1>
       <p class="mt-2 text-sm">{{ profile?.bio }}</p>
     </div>
@@ -15,21 +15,22 @@
 </template>
 
 <script lang="ts" setup>
-import { profileQuery } from '@/utils/supaQueries';
-import type { Tables } from 'database/types';
+import { profileQuery } from '@/utils/supaQueries'
+import type { Tables } from 'database/types'
 
+const { username } = useRoute('/users/[username]').params
 
-const {username} = useRoute('/users/[username]').params;
+usePageStore().pageData.title = ''
 
-const profile = ref<Tables<'profiles'> | null>(null);
+const profile = ref<Tables<'profiles'> | null>(null)
 
-const loadProfile = async() => {
-  const {data, error, status} = await profileQuery({column: 'username', value: username});
+const loadProfile = async () => {
+  const { data, error, status } = await profileQuery({ column: 'username', value: username })
 
-  if(error) useErrorStore().setError({error, customCode: status});
+  if (error) useErrorStore().setError({ error, customCode: status })
 
-  profile.value = data;
+  profile.value = data
 }
 
-await loadProfile();
+await loadProfile()
 </script>
