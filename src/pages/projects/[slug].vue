@@ -31,7 +31,7 @@
               class="w-full h-full flex items-center justify-center"
               :to="{ name: '/users/[username]', params: { username: collab.username } }"
             >
-              <AvatarImage :src="collab.avatar_url || ''" alt="image" />
+              <AvatarImage :src="collab.avatar_url ?? ''" :alt="collab.full_name" />
               <AvatarFallback> </AvatarFallback>
             </RouterLink>
           </Avatar>

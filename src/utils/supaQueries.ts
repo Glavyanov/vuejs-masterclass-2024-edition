@@ -56,3 +56,6 @@ export const groupedProfilesQuery = (ids: string[]) =>
 
 export const updateProjectQuery = (id: number, project: Omit<Partial<Project>, 'id' | 'tasks'>) =>
   supabase.from('projects').update(project).eq('id', id)
+
+export const updateTaskQuery = (id: number, task: Omit<Partial<Task>, 'id' | 'projects'>) =>
+  supabase.from('tasks').update(task).eq('id', id)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Project } from '@/utils/supaQueries'
+import type { Project, Task } from '@/utils/supaQueries'
 
-const model = defineModel<Project>({ required: true })
+const model = defineModel<Project | Task>({ required: true })
 const emit = defineEmits(['commit'])
 const oldModel = ref(model.value.description)
 const previousModel = ref(model.value.description)

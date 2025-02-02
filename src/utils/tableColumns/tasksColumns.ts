@@ -7,6 +7,7 @@ import Avatar from '@/components/ui/avatar/Avatar.vue'
 import AvatarImage from '@/components/ui/avatar/AvatarImage.vue'
 import { AvatarFallback } from 'radix-vue'
 import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
+import { formatDate } from '@/utils/formatDate'
 
 export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<TasksWithProjects[0]>[] => [
   {
@@ -23,16 +24,6 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<TasksWithProjec
       )
   },
   {
-    accessorKey: 'created_at',
-    header: () => h('div', { class: 'text-left' }, 'Created at'),
-    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('created_at'))
-  },
-  {
-    accessorKey: 'due_date',
-    header: () => h('div', { class: 'text-left' }, 'Due date'),
-    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('due_date'))
-  },
-  {
     accessorKey: 'status',
     header: () => h('div', { class: 'text-left' }, 'Status'),
     cell: ({ row }) =>
@@ -41,6 +32,11 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<TasksWithProjec
         { class: 'text-left font-medium' },
         h(AppInPlaceEditStatus, { modelValue: row.original?.status, readonly: true })
       )
+  },
+  {
+    accessorKey: 'due_date',
+    header: () => h('div', { class: 'text-left' }, 'Due date'),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('due_date'))
   },
   {
     accessorKey: 'projects',
@@ -75,6 +71,16 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<TasksWithProjec
           : row.original?.collaborators.map(() =>
               h(Avatar, { class: 'animate-pulse' }, () => h(AvatarFallback))
             )
+      )
+  },
+  {
+    accessorKey: 'created_at',
+    header: () => h('div', { class: 'text-left' }, 'Created at'),
+    cell: ({ row }) =>
+      h(
+        'div',
+        { class: 'text-left font-medium' },
+        formatDate(row.original?.created_at, 'YYYY-MM-DD HH:mm:ss')
       )
   }
 ]

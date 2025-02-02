@@ -7,6 +7,7 @@ import type { GroupedCollabs } from '@/types/GroupedCollabs'
 import type { Ref } from 'vue'
 import { AvatarFallback } from 'radix-vue'
 import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
+import { formatDate } from '@/utils/formatDate'
 
 export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
@@ -58,6 +59,11 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
   {
     accessorKey: 'created_at',
     header: () => h('div', { class: 'text-left' }, 'Created at'),
-    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('created_at'))
+    cell: ({ row }) =>
+      h(
+        'div',
+        { class: 'text-left font-medium' },
+        formatDate(row.original?.created_at, 'YYYY-MM-DD HH:mm:ss')
+      )
   }
 ]

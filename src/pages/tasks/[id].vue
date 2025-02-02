@@ -12,12 +12,14 @@
   <Table v-if="task">
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> {{ task.name }}</TableCell>
+      <TableCell>
+        <AppInPlaceEditText v-model="task.name" @commit="updateTask" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        {{  task.description }}
+        <AppInPlaceEditTextarea v-model="task" @commit="updateTask" />
       </TableCell>
     </TableRow>
     <TableRow>
@@ -26,11 +28,13 @@
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>
-      <TableCell> {{task.projects?.name}} </TableCell>
+      <TableCell> {{ task.projects?.name }} </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell> {{task.status}}   </TableCell>
+      <TableCell>
+        <AppInPlaceEditStatus v-model="task.status" @commit="updateTask" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
@@ -38,11 +42,14 @@
         <div class="flex">
           <Avatar
             class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="(collab, index) in task.collaborators"
-            :key="collab + index"
+            v-for="collab in collabs"
+            :key="collab.id"
           >
-            <RouterLink class="w-full h-full flex items-center justify-center" to="">
-              <AvatarImage src="" alt="" />
+            <RouterLink
+              class="w-full h-full flex items-center justify-center"
+              :to="{ name: '/users/[username]', params: { username: collab.username } }"
+            >
+              <AvatarImage :src="collab.avatar_url ?? ''" :alt="collab.full_name" />
               <AvatarFallback> </AvatarFallback>
             </RouterLink>
           </Avatar>
@@ -81,30 +88,25 @@
   </Table>
 </template>
 
-
 <script setup lang="ts">
-import { taskQuery } from '@/utils/supaQueries';
-import type { Task } from '@/utils/supaQueries';
+import AppInPlaceEditText from '@/components/AppInPlaceEdit/AppInPlaceEditText.vue'
 
-const task = ref<Task | null>(null)
 const route = useRoute('/tasks/[id]')
-const id = route.params?.id;
-const pageStore = usePageStore();
+const id = route.params?.id
+const pageStore = usePageStore()
+const tasksStore = useTasksStore()
+const { task } = storeToRefs(tasksStore)
+const { getTask, updateTask } = tasksStore
+const { getProfilesByIds } = useCollabs()
 
-const loadTask = async () => {
-  const { data, error, status } = await taskQuery(id);
-  if (data) task.value = { ...data }
-  if (error){
-    useErrorStore().setError({error, customCode: status});
-  }
-}
+await getTask(id)
 
-await loadTask();
-
-watch(() => task.value?.name,
+const collabs = task.value?.collaborators ? await getProfilesByIds(task.value?.collaborators) : []
+watch(
+  () => task.value?.name,
   (val) => {
-    pageStore.pageData.title = `Task ${val ?? ''}`;
+    pageStore.pageData.title = `Task ${val ?? ''}`
   },
-  {immediate: true}
+  { immediate: true }
 )
 </script>
