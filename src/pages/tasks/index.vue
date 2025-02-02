@@ -3,7 +3,7 @@
     <h1>Tasks page</h1>
   </div>
   <div v-if="tasks && tasks.length">
-    <DataTable :columns="columns" :data="tasks" />
+    <DataTable :columns="columnsWithCollabs" :data="tasks" />
   </div>
 </template>
 
@@ -19,10 +19,15 @@ const tasks = ref<TasksWithProjects | null>(null)
 const loadTasks = async () => {
   const { data, error, status } = await tasksWithProjectsQuery
   if (data) tasks.value = [...data]
-  if (error){
-    useErrorStore().setError({error, customCode: status});
+  if (error) {
+    useErrorStore().setError({ error, customCode: status })
   }
 }
 
 await loadTasks()
+
+const { getGroupedCollabs, groupedCollabs } = useCollabs()
+
+getGroupedCollabs(tasks.value ?? [])
+const columnsWithCollabs = columns(groupedCollabs)
 </script>

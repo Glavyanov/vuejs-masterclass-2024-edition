@@ -25,7 +25,7 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
   },
   {
     accessorKey: 'status',
-    header: () => h('div', { class: 'text-left' }, 'Same'),
+    header: () => h('div', { class: 'text-left' }, 'Status'),
     cell: ({ row }) => {
       return h(
         'div',
