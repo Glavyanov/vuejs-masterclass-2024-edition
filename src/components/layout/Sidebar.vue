@@ -7,9 +7,17 @@
         <iconify-icon icon="lucide:menu"></iconify-icon>
       </Button>
 
-      <Button variant="outline" size="icon" class="w-8 h-8">
-        <iconify-icon icon="lucide:plus"></iconify-icon>
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="outline" size="icon" class="w-8 h-8">
+            <iconify-icon icon="lucide:plus"></iconify-icon>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem @click="$emit('onTaskClick')"> Task </DropdownMenuItem>
+          <DropdownMenuItem> Project </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
 
     <nav class="flex flex-col gap-2 justify-between h-full relative">
@@ -18,14 +26,13 @@
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" @clicked="onClick"/>
+        <SidebarLinks :links="accountLinks" @clicked="onClick" />
       </div>
     </nav>
   </aside>
 </template>
 
 <script setup lang="ts">
-
 const links = [
   {
     title: 'Dashboard',
@@ -61,15 +68,17 @@ const accountLinks = [
   }
 ]
 
-const router = useRouter();
+const router = useRouter()
 
-const onClick = async (command: string) =>{
-  if(command === 'Sign out'){
+const onClick = async (command: string) => {
+  if (command === 'Sign out') {
     // necessary to use dynamic import or we get error => no active Pinia =>  https://vueschool.io/lessons/overcome-challenges-of-using-pinia-stores-in-external-files
-    const { logout } = await import('@/utils/supaAuth');
-    await logout();
+    const { logout } = await import('@/utils/supaAuth')
+    await logout()
 
-    router.push("/login");
+    router.push('/login')
   }
 }
+
+defineEmits(['onTaskClick'])
 </script>
