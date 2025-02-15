@@ -1,6 +1,7 @@
 import {
   projectsQuery,
   projectQuery,
+  projectQueryById,
   type Projects,
   type Project,
   updateProjectQuery
@@ -13,6 +14,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
 
   const loadProjects = useMemoize(async (key: string) => await projectsQuery)
   const loadProject = useMemoize(async (slug: string) => await projectQuery(slug))
+  const loadProjectById = useMemoize(async (slug: string) => await projectQueryById(slug))
 
   interface ValidateCacheParams {
     ref: typeof projects | typeof project
@@ -48,8 +50,8 @@ export const useProjectsStore = defineStore('projects-store', () => {
     })
   }
 
-  const getProject = async (slug: string) => {
-    const { data, error, status } = await loadProject(slug)
+  const getProject = async (slug: string, isById: boolean = false) => {
+    const { data, error, status } = isById ? await loadProjectById(slug) : await loadProject(slug)
     if (data) project.value = { ...data }
     if (error) {
       useErrorStore().setError({ error, customCode: status })

@@ -101,6 +101,7 @@
 
 <script setup lang="ts">
 const { slug } = useRoute('/projects/[slug]').params
+const { isById } = useRoute('/projects/[slug]').query
 // const route = useRoute(); => alternative way
 // const slug = ("slug" in route.params) ? route.params.slug : ""; => alternative way
 const pageStore = usePageStore()
@@ -117,7 +118,7 @@ watch(
   { immediate: true }
 )
 
-await getProject(slug)
+await getProject(slug, !!isById)
 
 const collabs = project.value?.collaborators
   ? await getProfilesByIds(project.value?.collaborators)
