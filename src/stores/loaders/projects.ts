@@ -61,7 +61,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
       ref: project,
       query: projectQuery,
       key: slug,
-      loadFn: loadProject
+      loadFn: isById ? loadProjectById : loadProject
     })
   }
 
