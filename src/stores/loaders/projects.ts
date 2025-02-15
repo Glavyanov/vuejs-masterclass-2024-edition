@@ -59,7 +59,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
 
     validateCache({
       ref: project,
-      query: projectQuery,
+      query: isById ? projectQueryById : projectQuery,
       key: slug,
       loadFn: isById ? loadProjectById : loadProject
     })
