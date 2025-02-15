@@ -13,7 +13,7 @@
           id="for"
           label="For"
           placeholder="Select a user"
-          :options="[{ label: 'Item name', value: 1 }]"
+          :options="selectOptions.profiles"
         />
         <FormKit
           type="textarea"
@@ -28,14 +28,15 @@
           id="project"
           label="Project"
           placeholder="Select a project"
-          :options="[{ label: 'Item name', value: 1 }]"
+          :options="selectOptions.projects"
         />
       </FormKit>
     </SheetContent>
   </Sheet>
 </template>
 <script setup lang="ts">
-import type { CreateNewTask } from '@/types/CreateNewTaskForm'
+import type { CreateNewTask, SelectOption } from '@/types/CreateNewTaskForm'
+import { profilesQuery, projectsQuery } from '@/utils/supaQueries'
 
 const sheetOpen = defineModel<boolean>()
 
@@ -46,4 +47,41 @@ const submitHandler = async (formdata: CreateNewTask) => {
     }, 2000)
   })
 }
+
+const selectOptions = ref({
+  projects: [] as SelectOption[],
+  profiles: [] as SelectOption[]
+})
+
+const getProjects = async () => {
+  const { data: allProjects } = await projectsQuery
+
+  if (!allProjects) return
+
+  for (const project of allProjects) {
+    selectOptions.value.projects.push({
+      value: project.id,
+      label: project.name
+    })
+  }
+}
+
+const getProfiles = async () => {
+  const { data: allProfiles } = await profilesQuery
+
+  if (!allProfiles) return
+
+  for (const profile of allProfiles) {
+    selectOptions.value.profiles.push({
+      value: profile.id,
+      label: profile.full_name
+    })
+  }
+}
+
+const loadOptions = async () => {
+  await Promise.all([getProjects(), getProfiles()])
+}
+
+loadOptions()
 </script>
