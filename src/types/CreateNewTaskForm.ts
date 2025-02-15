@@ -1,8 +1,8 @@
 export interface CreateNewTask {
   name: string
   description: string
-  project: number
-  profile_id: string
+  project_id: number
+  collaborators?: string[]
 }
 
 export type SelectOption = {

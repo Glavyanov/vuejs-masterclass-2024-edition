@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabaseClient'
+import type { CreateNewTask } from '@/types/CreateNewTaskForm'
 import type { QueryData } from '@supabase/supabase-js'
 
 export const tasksWithProjectsQuery = supabase.from('tasks').select(`
@@ -78,3 +79,5 @@ export const updateProjectQuery = (id: number, project: Omit<Partial<Project>, '
 
 export const updateTaskQuery = (id: number, task: Omit<Partial<Task>, 'id' | 'projects'>) =>
   supabase.from('tasks').update(task).eq('id', id)
+
+export const createTaskQuery = (task: CreateNewTask) => supabase.from('tasks').insert(task)
