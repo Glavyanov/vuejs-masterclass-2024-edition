@@ -3,19 +3,19 @@
     <TableRow>
       <TableHead> Name </TableHead>
       <TableCell>
-        <AppInPlaceEditText v-model="project.name" @commit="updateProject" />
+        <AppInPlaceEditText v-model="project!.name" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        <AppInPlaceEditTextarea v-model="project" @commit="updateProject" />
+        <AppInPlaceEditTextarea v-model:project="project" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
       <TableCell>
-        <AppInPlaceEditStatus v-model="project.status" @commit="updateProject" />
+        <AppInPlaceEditStatus v-model="project!.status" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>

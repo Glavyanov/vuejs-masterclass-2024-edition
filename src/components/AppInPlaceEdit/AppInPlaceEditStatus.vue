@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const status = defineModel<'completed' | 'in-progress'>()
+const status = defineModel<'completed' | 'in-progress'>({ default: null })
 const emit = defineEmits(['commit'])
 const { readonly = false } = defineProps<{ readonly?: boolean }>()
 

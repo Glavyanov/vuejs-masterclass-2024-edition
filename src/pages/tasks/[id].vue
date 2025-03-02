@@ -1,25 +1,15 @@
-<!-- <template>
-  <div>
-    <h1>Project:   {{ task?.name }}</h1>
-    <h2>Status:   {{ task?.status }}</h2>
-    <h3>Description:   {{ task?.description }}</h3>
-    <h4>Collaborators:   {{ JSON.stringify(task?.collaborators) }}</h4>
-    <h4>Created at:   {{ task?.created_at }}</h4>
-    <RouterLink :to="{ name: '/' }"> Go to Home</RouterLink>
-  </div>
-</template> -->
 <template>
   <Table v-if="task">
     <TableRow>
       <TableHead> Name </TableHead>
       <TableCell>
-        <AppInPlaceEditText v-model="task.name" @commit="updateTask" />
+        <AppInPlaceEditText v-model="task!.name" @commit="updateTask" />
       </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        <AppInPlaceEditTextarea v-model="task" @commit="updateTask" />
+        <AppInPlaceEditTextarea v-model:task="task" @commit="updateTask" />
       </TableCell>
     </TableRow>
     <TableRow>
@@ -33,7 +23,7 @@
     <TableRow>
       <TableHead> Status </TableHead>
       <TableCell>
-        <AppInPlaceEditStatus v-model="task.status" @commit="updateTask" />
+        <AppInPlaceEditStatus v-model="task!.status" @commit="updateTask" />
       </TableCell>
     </TableRow>
     <TableRow>
