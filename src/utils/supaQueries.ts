@@ -81,3 +81,5 @@ export const updateTaskQuery = (id: number, task: Omit<Partial<Task>, 'id' | 'pr
   supabase.from('tasks').update(task).eq('id', id)
 
 export const createTaskQuery = (task: CreateNewTask) => supabase.from('tasks').insert(task)
+
+export const deleteTaskQuery = (id: number) => supabase.from('tasks').delete().eq('id', id)

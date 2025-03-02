@@ -1,6 +1,6 @@
 <template>
   <div class="text-2xl cursor-pointer" @click="updateStatus">
-    <Transition mode="out-in">
+    <Transition name="scale" mode="out-in">
       <iconify-icon
         v-if="status === 'completed'"
         icon="lucide:circle-check"
@@ -22,15 +22,3 @@ const updateStatus = () => {
   emit('commit')
 }
 </script>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: transform 0.3s;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: scale(0.7);
-}
-</style>
