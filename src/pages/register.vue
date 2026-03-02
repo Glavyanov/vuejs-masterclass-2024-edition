@@ -46,7 +46,11 @@
               placeholder="*****"
               autocomplete
               required
+              :class="{ 'border-red-500': confirmPasswordError }"
             />
+          <ul class="text-sm text-left text-red-500" v-if="confirmPasswordError">
+            <li>{{ confirmPasswordError }}</li>
+          </ul>
           </div>
           <Button type="submit" class="w-full"> Register </Button>
           <!-- <Button variant="outline" class="w-full"> Login with Google </Button> -->
@@ -64,6 +68,7 @@
 import { register } from '@/utils/supaAuth';
 
 const router = useRouter();
+const confirmPasswordError = ref('');
 
 const formData = ref({
   username: '',
@@ -75,6 +80,12 @@ const formData = ref({
 })
 
 const signUp = async () => {
+  confirmPasswordError.value = '';
+  if (formData.value.password !== formData.value.confirmPassword) {
+    confirmPasswordError.value = 'Passwords do not match';
+    return;
+  }
+
   const success = await register(formData.value);
   if(success) router.push('/');
 }
