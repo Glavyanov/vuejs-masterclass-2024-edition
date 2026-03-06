@@ -16,12 +16,12 @@
         <form class="grid gap-4" @submit.prevent="saveProfile">
           <div class="grid gap-2">
             <Label for="full_name" class="text-left">Full Name</Label>
-            <Input v-model="formData.full_name" id="full_name" type="text" placeholder="John Doe" required />
+            <Input v-model="formData.full_name" id="full_name" type="text" placeholder="John Doe" required @keydown.enter.prevent />
           </div>
 
           <div class="grid gap-2">
             <Label for="username" class="text-left">Username</Label>
-            <Input v-model="formData.username" id="username" type="text" placeholder="johndoe19" required />
+            <Input v-model="formData.username" id="username" type="text" placeholder="johndoe19" required @keydown.enter.prevent />
           </div>
 
           <div class="grid gap-2">
@@ -33,7 +33,7 @@
           <div class="grid gap-2">
             <Label for="avatar_url" class="text-left">Avatar URL</Label>
             <Input v-model="formData.avatar_url" id="avatar_url" type="url"
-              placeholder="https://example.com/avatar.png" />
+              placeholder="https://example.com/avatar.png" @keydown.enter.prevent />
           </div>
 
           <p v-if="successMessage" class="text-sm text-green-600">{{ successMessage }}</p>
