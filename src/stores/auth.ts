@@ -26,6 +26,12 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
   }
 
+  const refreshProfile = async () => {
+    if (!user.value) return
+    const { data } = await profileQuery({ column: 'id', value: user.value.id })
+    profile.value = data || null
+  }
+
   const getSession = async () => {
     const { data } = await supabase.auth.getSession()
     if (data.session?.user) {
@@ -49,6 +55,7 @@ export const useAuthStore = defineStore('auth-store', () => {
     profile,
     setAuth,
     getSession,
+    refreshProfile,
     authTrackChanges
   }
 })

@@ -64,6 +64,8 @@ export const taskQuery = (id: string) =>
 
 export type Task = QueryData<ReturnType<typeof taskQuery>>
 
+export type Profile = QueryData<ReturnType<typeof profileQuery>>
+
 export const profileQuery = ({ column, value }: { column: string; value: string }) =>
   supabase.from('profiles').select().eq(column, value).single()
 
@@ -83,3 +85,5 @@ export const updateTaskQuery = (id: number, task: Omit<Partial<Task>, 'id' | 'pr
 export const createTaskQuery = (task: CreateNewTask) => supabase.from('tasks').insert(task)
 
 export const deleteTaskQuery = (id: number) => supabase.from('tasks').delete().eq('id', id)
+
+export const updateProfileQuery = (id: string, profile: Omit<Partial<Profile>, 'id' | 'created_at'>) => supabase.from('profiles').update(profile).eq('id', id)
