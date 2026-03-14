@@ -52,7 +52,7 @@
             <li>{{ confirmPasswordError }}</li>
           </ul>
           </div>
-          <Button type="submit" class="w-full"> Register </Button>
+          <Button type="submit" class="w-full" :disabled="submitting" > Register </Button>
           <!-- <Button variant="outline" class="w-full"> Login with Google </Button> -->
         </form>
         <div class="mt-4 text-sm text-center">
@@ -69,6 +69,7 @@ import { register } from '@/utils/supaAuth';
 
 const router = useRouter();
 const confirmPasswordError = ref('');
+const submitting = ref(false);
 
 const formData = ref({
   username: '',
@@ -86,7 +87,14 @@ const signUp = async () => {
     return;
   }
 
-  const success = await register(formData.value);
-  if(success) router.push('/');
+  try {
+    submitting.value = true;
+    const success = await register(formData.value);
+    if(success) router.push('/');
+  } catch (error) {
+    console.error('Registration error:', error);
+  } finally {
+    submitting.value = false;
+  }
 }
 </script>
