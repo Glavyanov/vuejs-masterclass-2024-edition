@@ -12,7 +12,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
   const projects = ref<Projects | null>(null)
   const project = ref<Project | null>(null)
 
-  const loadProjects = useMemoize(async (key: string) => await projectsQuery)
+  const loadProjects = useMemoize(async () => await projectsQuery)
   const loadProject = useMemoize(async (slug: string) => await projectQuery(slug))
   const loadProjectById = useMemoize(async (slug: string) => await projectQueryById(slug))
 
@@ -36,7 +36,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
   }
 
   const getProjects = async () => {
-    const { data, error, status } = await loadProjects('projects')
+    const { data, error, status } = await loadProjects()
     if (data) projects.value = [...data]
     if (error) {
       useErrorStore().setError({ error, customCode: status })
@@ -68,6 +68,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
   const updateProject = async () => {
     if (!project.value) return
     const { tasks, id, ...projectData } = project.value
+    console.log(tasks?.map(task => task.name))
     const { error, status } = await updateProjectQuery(id, projectData)
     if (error) {
       useErrorStore().setError({ error, customCode: status })

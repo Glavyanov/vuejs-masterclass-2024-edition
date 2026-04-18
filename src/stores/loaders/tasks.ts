@@ -42,7 +42,8 @@ export const useTasksStore = defineStore('tasks-store', () => {
   const updateTask = async () => {
     if (task.value) {
       const { id, projects, ...taskData } = task.value
-      const { error, status } = await updateTaskQuery(task.value.id, taskData)
+      console.log(projects?.name)
+      const { error, status } = await updateTaskQuery(id, taskData)
       if (error) {
         useErrorStore().setError({ error, customCode: status })
       }
